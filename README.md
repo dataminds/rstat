@@ -26,3 +26,36 @@ for (i in 1:ncol(dfN)) {
   t.df <- rbind(t.df, coef.df)
 } ; t.df[order(t.df$p), ]
 ```
+
+#### 객체명을 문자로 
+```
+object2string <- function(x) {
+  n <- deparse(substitute(x))
+  print(n)
+  }
+
+object2string(a)
+```
+
+#### 문자를 객체명으로
+```
+varName <- names(iris)[1] 
+as.name(varName)
+```
+
+#### Centering
+http://gastonsanchez.com/blog/how-to/2014/01/15/Center-data-in-R.html
+```
+# look into function
+rep(1, nrow(p1.df))
+t(colMeans(p1.df))
+head(rep(1, nrow(p1.df)) %*% t(colMeans(p1.df)))
+
+# function for mean centering
+center_mean <- function(x) {
+  ones = rep(1, nrow(x))
+  x_mean = ones %*% t(colMeans(x))
+  x - x_mean
+}
+```
+
