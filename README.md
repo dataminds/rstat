@@ -47,7 +47,7 @@ as.name(varName)
 ```
 
 #### Centering
-http://gastonsanchez.com/blog/how-to/2014/01/15/Center-data-in-R.html
+
 ```
 # look into function
 rep(1, nrow(p1.df))
@@ -60,5 +60,7 @@ center_mean <- function(x) {
   x_mean = ones %*% t(colMeans(x))
   x - x_mean
 }
+
+# source: http://gastonsanchez.com/blog/how-to/2014/01/15/Center-data-in-R.html
 ```
 
