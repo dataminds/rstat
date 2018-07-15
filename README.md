@@ -3,7 +3,10 @@ Statistical Analysis
 
 
 ### 상관관계 표 만들기
-- R에서 분석한 상관관계를 계수와 P값이 함께 나오게 표로 만들기 [R파일](https://github.com/dataminds/rtip/blob/master/correlatonMatrix_table.R)
+- R에서 분석한 상관관계를 계수와 P값이 함께 나오게 표로 만들기 
+  - [R파일](https://github.com/dataminds/rtip/blob/master/correlatonMatrix_table.R)
+  - [Rmd](https://github.com/dataminds/rstat/blob/master/correlatonMatrix_table_note.Rmd)
+
 
 ### 복수의 t검정 결과를 데이터프레임으로 만들어 정열
 변수가 여러개 있는 데이터를 사전분석할 때 sex등과 같은 변수가 미치는 영향을 사전 검토할 때 유용
