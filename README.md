@@ -30,7 +30,7 @@ for (i in 1:ncol(dfN)) {
 } ; t.df[order(t.df$p), ]
 ```
 
-#### 객체명을 문자로 
+### 객체명을 문자로 
 ```
 object2string <- function(x) {
   n <- deparse(substitute(x))
@@ -40,13 +40,13 @@ object2string <- function(x) {
 object2string(a)
 ```
 
-#### 문자를 객체명으로
+### 문자를 객체명으로
 ```
 varName <- names(iris)[1] 
 as.name(varName)
 ```
 
-#### Centering
+### Centering
 
 ```
 # look into function
