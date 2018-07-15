@@ -15,6 +15,7 @@ Statistical Analysis
 names(df)
 options(digits = 3)
 IV <- df$sex #독립변수
+dfN <- df[-c(IV)]
 v1 <- levels(IV)[1] #독립변수의 속성1
 v2 <- levels(IV)[2] #독립변수의 속성2
 t.df <- data.frame()
