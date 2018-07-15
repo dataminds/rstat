@@ -31,6 +31,37 @@ for (i in 1:ncol(dfN)) {
 } ; t.df[order(t.df$p), ]
 ```
 
+### 복수의 회귀분석 결과를 하나의 데이터프레임 생성
+```
+attach(df)
+DV <- wbN
+IV1 <- year
+IV2 <- boeeC
+detach(df)
+
+# regression
+fit1 <- lm(DV ~ IV1) %>% summary
+fit2 <- lm(DV ~ IV1 + IV2) %>% summary
+
+# object2string 
+o2s <- function(x) { 
+    n <- deparse(substitute(x)); print(n) 
+    }
+
+# cobmine results data
+fit.df <- do.call( "rbind", 
+  list(
+    fit1$coef[, 3:4] %>% round(., 3) %>% as.data.frame() %>% mutate(var = rownames(.), fit = o2s(fit1)),
+    fit2$coef[, 3:4] %>% round(., 3) %>% as.data.frame() %>% mutate(var = rownames(.), fit = o2s(fit2))
+  )
+) 
+
+fit.df <- fit.df[c(4, 3, 1, 2)]
+fit.df
+fit.df[order(fit.df$var),]
+```
+
+
 ### 객체명을 문자로 
 ```
 object2string <- function(x) {
