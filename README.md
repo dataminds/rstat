@@ -41,7 +41,7 @@ for (i in 1:ncol(dfN)) {
   s.t <- wilcox.test(DV[, i] ~ IV)
   coef.df <- data.frame( v1 = DV[which(df[,IVcol]== v1), i] %>% mean,
                          v2 = DV[which(df[,IVcol]== v2), i] %>% mean,
-                         t = s.t$statistic,
+                         w = s.t$statistic,
                          p = s.t$p.value )
   colnames(coef.df) <- c(v1, v2, "t", "p")
   rownames(coef.df) <- names(dfN)[i]
