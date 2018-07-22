@@ -81,7 +81,17 @@ sig.m <- upper
 sig.df <- as.data.frame(sig.m, stringsAsFactors = F)
 sig.df <- as.data.frame(apply(sig.df, 2, as.numeric))
 
-sig.df <- round(sig.df, 3)
+s.df <- round(sig.df, 3)
+
+for(i in 1:ncol(s.df)){
+  s.df[which(s.df[,i] <= .001), i] <- "***"
+  s.df[which(s.df[,i] <= .01 & s.df[,i] > .001), i] <- "**"
+  s.df[which(s.df[,i] <= .05 & s.df[,i] > .01), i] <- "*"  
+  s.df[which(s.df[,i] <= 1 & s.df[,i] > .05), i] <- NA
+  
+}; s.df
+
+sig.df <- s.df
 colnames(sig.df) <- paste0("p", 1:ncol(sig.df))
 sig.df
 ```
