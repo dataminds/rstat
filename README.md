@@ -7,46 +7,55 @@ Statistical Analysis
 ```
 names(df)
 options(digits = 3)
+
+DV <- df[1:27] # 종속변수 선택 
 IV <- df$sex #독립변수
-dfN <- df[-c(IV)]
+IVcol <- "sex"
+
 v1 <- levels(IV)[1] #독립변수의 속성1
 v2 <- levels(IV)[2] #독립변수의 속성2
+
 t.df <- data.frame()
-for (i in 1:ncol(dfN)) {
-  s.t <- t.test(df[, i] ~ IV)
-  coef.df <- data.frame( v1 = s.t$estimate[1],
-                         v2 = s.t$estimate[2],
+for (i in 1:ncol(DV)) {
+  s.t <- t.test(DV[, i] ~ IV)
+  coef.df <- data.frame( v1 = DV[which(df[,IVcol]== v1), i] %>% mean,
+                         v2 = DV[which(df[,IVcol]== v2), i] %>% mean,
                          t = s.t$statistic,
                          p = s.t$p.value )
   colnames(coef.df) <- c(v1, v2, "t", "p")
   rownames(coef.df) <- names(dfN)[i]
   t.df <- rbind(t.df, coef.df)
 } ; t.df[order(t.df$p), ]
+
+t.df
+
 ```
 
 ### 복수의 wilcox검정 결과를 데이터프레임으로 만들어 정열
 ```
 names(df)
 options(digits = 3)
-DV <- df[1:27]
+
+DV <- df[1:27] # 종속변수 선택 
 IV <- df$sex #독립변수
 IVcol <- "sex"
-dfN <- df[1:27]
-names(dfN)
-#dfN <- df[-c(IV)]
+
 v1 <- levels(IV)[1] #독립변수의 속성1
 v2 <- levels(IV)[2] #독립변수의 속성2
+
 t.df <- data.frame()
-for (i in 1:ncol(dfN)) {
+for (i in 1:ncol(DV)) {
   s.t <- wilcox.test(DV[, i] ~ IV)
   coef.df <- data.frame( v1 = DV[which(df[,IVcol]== v1), i] %>% mean,
                          v2 = DV[which(df[,IVcol]== v2), i] %>% mean,
                          w = s.t$statistic,
                          p = s.t$p.value )
-  colnames(coef.df) <- c(v1, v2, "t", "p")
+  colnames(coef.df) <- c(v1, v2, "w", "p")
   rownames(coef.df) <- names(dfN)[i]
   t.df <- rbind(t.df, coef.df)
 } ; t.df[order(t.df$p), ]
+
+t.df
 ```
 
 
