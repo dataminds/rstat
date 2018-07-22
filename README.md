@@ -31,6 +31,33 @@ for (i in 1:ncol(dfN)) {
 } ; t.df[order(t.df$p), ]
 ```
 
+### 복수의 wilcox검정 결과를 데이터프레임으로 만들어 정열
+```
+names(df)
+options(digits = 3)
+DV <- df[1:27]
+IV <- df$sex #독립변수
+IVcol <- "sex"
+dfN <- df[1:27]
+names(dfN)
+#dfN <- df[-c(IV)]
+v1 <- levels(IV)[1] #독립변수의 속성1
+v2 <- levels(IV)[2] #독립변수의 속성2
+t.df <- data.frame()
+for (i in 1:ncol(dfN)) {
+  s.t <- wilcox.test(DV[, i] ~ IV)
+  coef.df <- data.frame( v1 = DV[which(df[,IVcol]== v1), i] %>% mean,
+                         v2 = DV[which(df[,IVcol]== v2), i] %>% mean,
+                         t = s.t$statistic,
+                         p = s.t$p.value )
+  colnames(coef.df) <- c(v1, v2, "t", "p")
+  rownames(coef.df) <- names(dfN)[i]
+  t.df <- rbind(t.df, coef.df)
+} ; t.df[order(t.df$p), ]
+```
+
+
+
 ### 복수의 회귀분석 결과를 하나의 데이터프레임 생성
 ```
 attach(df)
