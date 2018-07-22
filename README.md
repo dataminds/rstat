@@ -34,11 +34,9 @@ t.df
 ### 복수의 wilcox검정 결과를 데이터프레임으로 만들어 정열
 ```
 names(df)
-options(digits = 3)
-
 DV <- df[1:27] # 종속변수 선택 
-IV <- df$sex #독립변수
-IVcol <- "sex"
+IV <- df$status #독립변수
+IVcol <- "status"
 
 v1 <- levels(IV)[1] #독립변수의 속성1
 v2 <- levels(IV)[2] #독립변수의 속성2
@@ -46,17 +44,22 @@ v2 <- levels(IV)[2] #독립변수의 속성2
 t.df <- data.frame()
 for (i in 1:ncol(DV)) {
   s.t <- wilcox.test(DV[, i] ~ IV)
-  coef.df <- data.frame( v1 = DV[which(df[,IVcol]== v1), i] %>% mean,
-                         v2 = DV[which(df[,IVcol]== v2), i] %>% mean,
+  coef.df <- data.frame( v1m = DV[which(df[,IVcol]== v1), i] %>% mean,
+                         v1d = DV[which(df[,IVcol]== v1), i] %>% median,
+                         v1s = DV[which(df[,IVcol]== v1), i] %>% sd,
+                         v2m = DV[which(df[,IVcol]== v2), i] %>% mean,
+                         v2d = DV[which(df[,IVcol]== v2), i] %>% median,
+                         v2s = DV[which(df[,IVcol]== v2), i] %>% sd,
                          w = s.t$statistic,
                          p = s.t$p.value )
-  colnames(coef.df) <- c(v1, v2, "w", "p")
+  colnames(coef.df) <- c(paste0(v1, "me"), paste0(v1, "md"), paste0(v1, "sd"), 
+                         paste0(v2, "me"), paste0(v2, "md"), paste0(v2, "sd"), 
+                         "w", "p")
   rownames(coef.df) <- names(dfN)[i]
   t.df <- rbind(t.df, coef.df)
 } ; t.df[order(t.df$p), ]
 
-t.df
-```
+t.df```
 
 
 
