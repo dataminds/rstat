@@ -59,7 +59,8 @@ for (i in 1:ncol(DV)) {
   t.df <- rbind(t.df, coef.df)
 } ; t.df[order(t.df$p), ]
 
-t.df```
+t.df
+```
 
 
 
@@ -80,7 +81,7 @@ o2s <- function(x) {
     n <- deparse(substitute(x)); print(n) 
     }
 
-# cobmine results data
+# combining results data
 fit.df <- do.call( "rbind", 
   list(
     fit1$coef[, 3:4] %>% round(., 3) %>% as.data.frame() %>% mutate(var = rownames(.), fit = o2s(fit1)),
