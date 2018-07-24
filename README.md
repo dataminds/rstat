@@ -96,10 +96,8 @@ fit.df[order(fit.df$var),]
 
 ### 회귀분석 결과 APA형식에 맞게 출력
 ```
-if(!require(QuantPsyc)) install.packages("QuantPsyc")
 if(!require(dplyr)) install.packages("dpyr")
 library(dplyr)
-library(QuantPsyc)
 
 # 분석 데이터
 df <- iris
@@ -108,13 +106,13 @@ DV <- df[,1]
 IV1 <- df[,2]
 IV2 <- df[,3]
 
-lm(DV ~ IV1 + IV2, data = df)
-lm(Sepal.Length ~ Sepal.Width + Petal.Length, data = df)
+fit <- lm(DV ~ IV1 + IV2, data = df)
+fit.s <- lm(scale(DV) ~ scale(IV1) + scale(IV2), data = df)
 
-coef.df <- (lm(DV ~ IV1 + IV2, data = df) %>% summary)$coef %>% round(.,3)
-beta.df <- (lm(scale(DV) ~ scale(IV1) + scale(IV2), data = df) %>% summary)$coef[, 1] %>% 
-  as.data.frame() %>% round(.,3) 
-confint.df <- lm(DV ~ IV1 + IV2, data = df) %>% confint %>% as.data.frame() %>% round(.,3)
+## regresssion table
+coef.df <- (fit %>% summary)$coef %>% round(.,3)
+confint.df <- fit %>% confint %>% as.data.frame() %>% round(.,3)
+beta.df <- (fit.s %>% summary)$coef[, 1] %>% as.data.frame() %>% round(.,3) 
 
 t.df <- cbind(coef.df, confint.df)
 t.df <- cbind(t.df, beta.df)
@@ -124,25 +122,26 @@ t.df
 
 dplyr::select(t.df, "B", "b", "SE", "t", "p", "95%CI LL", "95%CI UL")
 
-## 주 
+## table note 
 n <- nrow(df)
 
 # F통계
-numdf <- (lm(DV ~ IV1 + IV2, data = df) %>% summary)$fstatistic[2]
-dendf <- (lm(DV ~ IV1 + IV2, data = df) %>% summary)$fstatistic[3]
-value <- (lm(DV ~ IV1 + IV2, data = df) %>% summary)$fstatistic[1] %>% round(.,2)
+numdf <- (fit %>% summary)$fstatistic[2]
+dendf <- (fit %>% summary)$fstatistic[3]
+value <- (fit %>% summary)$fstatistic[1] %>% round(.,2)
 
 # R제곱
-r2 <- (lm(DV ~ IV1 + IV2, data = df) %>% summary)$r.squared %>% round(.,2)
-r2adj <- (lm(DV ~ IV1 + IV2, data = df) %>% summary)$adj.r.squared %>% round(.,2)
+r2 <- (fit %>% summary)$r.squared %>% round(.,2)
+r2adj <- (fit %>% summary)$adj.r.squared %>% round(.,2)
 
 fstat <- paste0("F(", numdf, ",", dendf, ") = ", value)
 r.v <- paste0("R2 = ", r2, " , 수정 R2 = ", r2adj)
 nn <- paste0("N = ", n)
 cf <- "SE = 표준오차; CI = 신뢰구간; LL = 하한계; UL = 상한계."
 
-## 주 
+## 
 c(fstat, r.v, nn, cf)
+
 ```
 
 
