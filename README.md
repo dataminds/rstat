@@ -96,19 +96,6 @@ fit.df[order(fit.df$var),]
 
 ### 회귀분석 결과 APA형식에 맞게 출력
 ```
-if(!require(dplyr)) install.packages("dpyr")
-library(dplyr)
-
-# 분석 데이터
-df <- iris
-# 투입할 변수
-DV <- df[,1]
-IV1 <- df[,2]
-IV2 <- df[,3]
-
-fit <- lm(DV ~ IV1 + IV2, data = df)
-fit.s <- lm(scale(DV) ~ scale(IV1) + scale(IV2), data = df)
-
 ## regresssion table
 coef.df <- (fit %>% summary)$coef %>% round(.,3)
 confint.df <- fit %>% confint %>% as.data.frame() %>% round(.,3)
@@ -120,7 +107,7 @@ t.df <- cbind(t.df, beta.df)
 colnames(t.df) <- c("B", "SE", "t", "p", "95%CI LL", "95%CI UL", "b")
 t.df
 
-dplyr::select(t.df, "B", "b", "SE", "t", "p", "95%CI LL", "95%CI UL")
+t.df <- dplyr::select(t.df, "B", "b", "SE", "t", "p", "95%CI LL", "95%CI UL")
 
 ## table note 
 n <- nrow(df)
@@ -140,7 +127,10 @@ nn <- paste0("N = ", n)
 cf <- "SE = 표준오차; CI = 신뢰구간; LL = 하한계; UL = 상한계."
 
 ## 
-c(fstat, r.v, nn, cf)
+n.v <- c(fstat, r.v, nn, cf)
+
+write.csv(t.df, "table.csv")
+write.csv(n.v, "note.csv")
 
 ```
 
