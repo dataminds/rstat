@@ -123,7 +123,28 @@ colnames(t.df) <- c("B", "SE", "t", "p", "95%CI LL", "95%CI UL", "b")
 t.df
 
 dplyr::select(t.df, "B", "b", "SE", "t", "p", "95%CI LL", "95%CI UL")
+
+## 주 
+n <- nrow(df)
+
+# F통계
+numdf <- (lm(DV ~ IV1 + IV2, data = df) %>% summary)$fstatistic[2]
+dendf <- (lm(DV ~ IV1 + IV2, data = df) %>% summary)$fstatistic[3]
+value <- (lm(DV ~ IV1 + IV2, data = df) %>% summary)$fstatistic[1] %>% round(.,2)
+
+# R제곱
+r2 <- (lm(DV ~ IV1 + IV2, data = df) %>% summary)$r.squared %>% round(.,2)
+r2adj <- (lm(DV ~ IV1 + IV2, data = df) %>% summary)$adj.r.squared %>% round(.,2)
+
+fstat <- paste0("F(", numdf, ",", dendf, ") = ", value)
+r.v <- paste0("R2 = ", r2, " , 수정 R2 = ", r2adj)
+nn <- paste0("N = ", n)
+cf <- "SE = 표준오차; CI = 신뢰구간; LL = 하한계; UL = 상한계."
+
+## 주 
+c(fstat, r.v, nn, cf)
 ```
+
 
 ### 객체명을 문자로 
 ```
