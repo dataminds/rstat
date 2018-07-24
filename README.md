@@ -129,8 +129,8 @@ cf <- "SE = 표준오차; CI = 신뢰구간; LL = 하한계; UL = 상한계."
 ## 
 n.v <- c(fstat, r.v, nn, cf)
 
-write.csv(t.df, "regression_table.csv")
-write.csv(n.v, "regression_note.csv", col.names = F, row.names = F)
+write.csv(t.df, "table_regression.csv")
+write.csv(n.v, "table_regression_note.csv", col.names = F, row.names = F)
 
 ```
 
