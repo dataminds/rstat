@@ -134,6 +134,11 @@ write.csv(n.v, "table_regression_note.csv", col.names = F, row.names = F)
 
 ```
 
+### 문자를 객체명으로
+```
+varName <- names(iris)[1] 
+as.name(varName)
+```
 
 ### 객체명을 문자로 
 ```
@@ -141,15 +146,22 @@ object2string <- function(x) {
   n <- deparse(substitute(x))
   print(n)
   }
-
 object2string(a)
+
+# Or use all.vars() all.names()
+# Return a character vector containing all the names which occur in an expression or call
+modelformula <- mpg ~ cyl + disp + hp + drat + qsec
+
+all.vars(modelformula)
+ [1] "mpg"  "cyl"  "disp" "hp"   "drat" "qsec"
+
+```
+### 복수의 변수를 한번에 표준화
+```
+mycars <- lapply(mtcars[, all.vars(modelformula)], scale) 
+
 ```
 
-### 문자를 객체명으로
-```
-varName <- names(iris)[1] 
-as.name(varName)
-```
 
 ### Centering
 
