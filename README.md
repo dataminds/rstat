@@ -130,7 +130,7 @@ cf <- "SE = 표준오차; CI = 신뢰구간; LL = 하한계; UL = 상한계."
 n.v <- c(fstat, r.v, nn, cf)
 
 write.csv(t.df, "table.csv")
-write.csv(n.v, "note.csv")
+write.csv(n.v, "note.csv", col.names = F, row.names = F)
 
 ```
 
