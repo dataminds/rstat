@@ -11,6 +11,7 @@ data_filled <- data.frame( sapply(dataset,
 ```
 ### 결측값 k최근 인접 분류 
 https://www.rdocumentation.org/packages/DMwR/versions/0.4.1/topics/knnImputation
+https://thebook.io/006723/ch09/02/02/
 ```
 if(!require(DMwR)) install.packages("DMwR")
 library(DMwR)
