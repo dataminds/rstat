@@ -1,12 +1,20 @@
 # rstat
 Statistical Analysis
 
-### 데이터프레임 각 변수 결측값 Simple (nonstochastic) imputation (평균값 대체)
+### 결측값 평균값 대체
+#### 데이터프레임 각 변수 결측값 Simple (nonstochastic) imputation 
 ```
 colSums(is.na(dataset)) #결측값포함된 열 확인
 data_filled <- data.frame( sapply(dataset, 
                                   function(x) ifelse(is.na(x), mean(x, na.rm=TRUE), 
                                   x)) )
+```
+### 결측값 k최근 인접 분류 
+https://www.rdocumentation.org/packages/DMwR/versions/0.4.1/topics/knnImputation
+```
+data(algae)
+cleanAlgae <- knnImputation(algae)
+summary(cleanAlgae)
 ```
 
 ### 복수의 t검정 결과를 데이터프레임으로 만들어 정열
