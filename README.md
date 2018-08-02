@@ -12,6 +12,8 @@ data_filled <- data.frame( sapply(dataset,
 ### 결측값 k최근 인접 분류 
 https://www.rdocumentation.org/packages/DMwR/versions/0.4.1/topics/knnImputation
 ```
+if(!require(DMwR)) install.packages("DMwR")
+library(DMwR)
 data(algae)
 cleanAlgae <- knnImputation(algae)
 summary(cleanAlgae)
