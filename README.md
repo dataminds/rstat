@@ -1,6 +1,14 @@
 # rstat
 Statistical Analysis
 
+### 데이터프레임 각 변수 결측값 Simple (nonstochastic) imputation (평균값 대체)
+```
+colSums(is.na(dataset)) #결측값포함된 열 확인
+data_filled <- data.frame( sapply(dataset, 
+                                  function(x) ifelse(is.na(x), mean(x, na.rm=TRUE), 
+                                  x)) )
+```
+
 ### 복수의 t검정 결과를 데이터프레임으로 만들어 정열
 변수가 여러개 있는 데이터를 사전분석할 때 sex등과 같은 변수가 미치는 영향을 사전 검토할 때 유용
 
