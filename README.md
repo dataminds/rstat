@@ -22,6 +22,9 @@ summary(cleanAlgae)
 
 ### 변수 만들 때 여러 행의 값 더하고 나누기
 ```
+if(!require(dplyr)) install.packages("dplr")
+library(dplyr)
+
 a1 <- c(1, 2, 3, 4)
 b1 <- c(1, 2, 3, 4)
 c1 <- c(1, 2, 3, 4)
