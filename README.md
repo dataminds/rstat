@@ -31,6 +31,12 @@ c1 <- c(1, 2, 3, 4)
 df <- data.frame(a1, b1, c1)
 
 df$var1 <- rowSums(select(df, a1:c1))/ncol(select(df, a1:c1))
+
+s1 <- "sol_001.x"
+s2 <- "sol_009.x"
+sel <- select(df, s1:s2)
+wb <- rowSums(sel) / ncol(sel)
+
 ```
 
 
