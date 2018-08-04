@@ -20,6 +20,18 @@ cleanAlgae <- knnImputation(algae)
 summary(cleanAlgae)
 ```
 
+### 변수 만들 때 여러 행의 값 더하고 나누기
+```
+a1 <- c(1, 2, 3, 4)
+b1 <- c(1, 2, 3, 4)
+c1 <- c(1, 2, 3, 4)
+df <- data.frame(a1, b1, c1)
+
+df$var1 <- rowSums(select(df, a1:c1))/ncol(select(df, a1:c1))
+```
+
+
+
 ### 복수의 t검정 결과를 데이터프레임으로 만들어 정열
 변수가 여러개 있는 데이터를 사전분석할 때 sex등과 같은 변수가 미치는 영향을 사전 검토할 때 유용
 
