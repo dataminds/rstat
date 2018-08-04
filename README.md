@@ -20,10 +20,12 @@ cleanAlgae <- knnImputation(algae)
 summary(cleanAlgae)
 ```
 
-### 변수 만들 때 여러 행의 값 더하고 나누기
+### 변수 만들 때 여러 행의 값 더하고 나누기 & 알파 
 ```
 if(!require(dplyr)) install.packages("dplr")
+if(!require(psych)) install.packages("psych")
 library(dplyr)
+library(psych)
 
 a1 <- c(1, 2, 3, 4)
 b1 <- c(1, 2, 3, 4)
@@ -36,6 +38,7 @@ s1 <- "sol_001.x"
 s2 <- "sol_009.x"
 sel <- select(df, s1:s2)
 wb <- rowSums(sel) / ncol(sel)
+alpha(sel)
 
 ```
 
