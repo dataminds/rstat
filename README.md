@@ -201,6 +201,7 @@ all.vars(modelformula)
 ```
 ### 복수의 변수를 한번에 표준화
 ```
+modelformula <- A ~ B + C
 mycars <- lapply(mtcars[, all.vars(modelformula)], scale) 
 
 ```
