@@ -1,8 +1,8 @@
 # rstat
 Statistical Analysis
 
-### 데이터프레임에서 factor의 level 값 변경
-#### tidyverse의 forcats패키지의 fct_recode 이용
+### 데이터프레임 factor의 level 값 변경
+#### tidyverse forcats패키지의 fct_recode 이용
 ```
 if(!require(tidyverse)) install.packages("tidyverse")
 library(tidyverse)
