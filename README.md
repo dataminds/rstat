@@ -1,6 +1,15 @@
 # rstat
 Statistical Analysis
 
+### 데이터프레임에서 factor의 level 값 변경
+#### tidyverse의 forcats패키지의 fct_recode 이용
+```
+if(!require(tidyverse)) install.packages("tidyverse")
+library(tidyverse)
+dat <- data.frame(x = factor("A"), y = 1)
+mutate(dat, x = fct_recode(x, B = "A"))
+```
+
 ### 결측값 평균값 대체
 #### 데이터프레임 각 변수 결측값 Simple (nonstochastic) imputation 
 ```
