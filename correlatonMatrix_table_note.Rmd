@@ -38,7 +38,8 @@ colnames(upper) <- 1:length(upper[1,])
 upper
 
 ```
-
+corrr패키지의 shave()함수도 같은 기능. 
+https://www.tidyverse.org/blog/2020/12/corrr-0-4-3/
 
 
 ### 평균과 표준편자 행 추가하고, 열 이름 만들기 
