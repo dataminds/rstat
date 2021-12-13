@@ -242,3 +242,15 @@ bind_cols(
   tibble(변수명 = rownames(df)),
   df) -> df 
 ```
+
+### 데이터프레임 복수의 열에서 숫자형만 찾아 계산
+```
+# 행방향 합산
+df %>% summarise(across(where(is.numeric), sum)) %>%
+    add_column(변수명 = "Total", .before = "열이름")
+# 열방향 합산
+  mutate(
+    Total = rowSums(across(where(is.numeric) ))
+  ) 
+ ``` 
+
