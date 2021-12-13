@@ -234,3 +234,11 @@ center_mean <- function(x) {
 # source: http://gastonsanchez.com/blog/how-to/2014/01/15/Center-data-in-R.html
 ```
 
+### 문자형인 table을 데이터프레임으로 변경
+```
+table() %>% as.data.frame.matrix() -> df
+
+bind_cols(
+  tibble(변수명 = rownames(df)),
+  df) -> df 
+```
