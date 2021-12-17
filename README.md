@@ -219,19 +219,20 @@ mycars <- lapply(mtcars[, all.vars(modelformula)], scale)
 ### Centering
 
 ```
-# look into function
-rep(1, nrow(p1.df))
-t(colMeans(p1.df))
-head(rep(1, nrow(p1.df)) %*% t(colMeans(p1.df)))
+# look into line by line
+rep(1, nrow(df))
+t(apply(df, 2, median))
+rep(1, nrow(df)) %*% t(apply(df, 2, median)) 
 
-# function for mean centering
-center_mean <- function(x) {
+head(rep(1, nrow(df)) %*% t(apply(df, 2, median)), 3)
+
+# function for median centering
+center_median <- function(x) {
   ones = rep(1, nrow(x))
-  x_mean = ones %*% t(colMeans(x))
-  x - x_mean
+  x_median = ones %*% t(apply(x, 2, median))
+  x - x_median
 }
 
-# source: http://gastonsanchez.com/blog/how-to/2014/01/15/Center-data-in-R.html
 ```
 
 ### 문자형인 table을 데이터프레임으로 변경
