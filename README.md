@@ -222,7 +222,7 @@ mycars <- lapply(mtcars[, all.vars(modelformula)], scale)
 # look into line by line
 rep(1, nrow(df))
 t(apply(df, 2, median))
-rep(1, nrow(df)) %*% t(apply(df, 2, median)) 
+rep(1, nrow(df)) %*% t(apply(df, 2, median)) # 행렬 곱하기
 
 head(rep(1, nrow(df)) %*% t(apply(df, 2, median)), 3)
 
