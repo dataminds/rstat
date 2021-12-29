@@ -145,6 +145,16 @@ fit.df <- fit.df[c(4, 3, 1, 2)]
 fit.df
 fit.df[order(fit.df$var),]
 ```
+### Running Multiple Linear Regression Models in for-Loop
+https://statisticsglobe.com/r-multiple-regressions-in-for-loop
+```
+mod_summaries <- list()                  # Create empty list
+for(i in 2:ncol(data)) {                 # Head of for-loop
+  predictors_i <- colnames(data)[2:i]    # Create vector of predictor names
+  mod_summaries[[i - 1]] <- summary(     # Store regression model summary in list
+    lm(y ~ ., data[ , c("y", predictors_i)]))
+}
+```
 
 ### 회귀분석 결과 APA형식에 맞게 출력
 ```
