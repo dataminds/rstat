@@ -195,6 +195,42 @@ write.csv(t.df, "table_regression.csv")
 write.csv(n.v, "table_regression_note.csv", row.names = F)
 
 ```
+### 복수의 조절매개분석: for loop
+```
+v_df %>% mutate(자아존상하 = case_when(자아존중감 < 4 ~ 2, TRUE ~ 6)) -> df
+
+X <- c("대면빈도", "비대면빈도", "관계이용", "정보이용", "오락이용", "소셜이용", "뉴스이용")
+M <- "관계_고립"
+Y <- "정신건강"
+W <- "성+나이+소득+학력"
+I <- "자아존상하"
+out2_l <- list()
+out6_l <- list()
+test_l <- list()
+for(i in seq_along(X)) {
+  M_fmla <- paste0(M, "~", X[[i]], "*", I, "+", W)
+  Y_fmla <- paste0(Y, "~", M, "+", X[[i]], "*", I, "+", M, "*", I, "+", W)
+  
+  med_fit <- lm(M_fmla, data = df)
+  out_fit <- lm(Y_fmla, data = df)
+  med2_out <- mediation::mediate(
+    med_fit, out_fit, treat = X[[i]], mediator = M, covariates = list(자아존상하 = 2), sims = 100)
+  med6_out <- mediation::mediate(
+    med_fit, out_fit, treat = X[[i]], mediator = M, covariates = list(자아존상하 = 6), sims = 100)
+  med_init <- mediation::mediate(med_fit, out_fit, treat = X[[i]], mediator = M, sims = 2)
+  test_l[[i]] <- test.modmed(
+      med_init, covariates.1 = list(자아존상하 = 2), covariates.2 = list(자아존상하 = 6))
+  plot(med2_out, main = paste(X[[i]], "-", M, "-", Y,": ", I, " = 2", sep = " "))
+  plot(med6_out, main = paste(X[[i]], "-", M, "-", Y,": ", I, " = 6", sep = " "))
+  out2_l[[i]] <- summary(med2_out)
+  out6_l[[i]] <- summary(med6_out)
+}
+saveRDS(test_l, "iso_mh_outi.rds")
+saveRDS(out2_l, "iso_mh_out2.rds")
+saveRDS(out6_l, "iso_mh_out6.rds")
+```
+
+
 
 ### 문자를 객체명으로
 ```
