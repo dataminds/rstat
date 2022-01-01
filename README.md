@@ -261,6 +261,23 @@ mycars <- lapply(mtcars[, all.vars(modelformula)], scale)
 
 ```
 
+### ggplot2 in a loop
+https://www.r-bloggers.com/2013/04/ggplot2-graphics-in-a-loop/
+aes_string() 문자형으로 변수 
+```
+plotHistFunc <- function(x, na.rm = TRUE, ...) {
+  nm <- names(x)
+  for (i in seq_along(nm)) {
+plots <-ggplot(x,aes_string(x = nm[i])) + geom_histogram(alpha = .5,fill = "dodgerblue")
+ggsave(plots,filename=paste("myplot",nm[i],".png",sep=""))
+  }
+}
+
+plotHistFunc(df) ## execute function
+
+
+```
+
 
 ### Centering
 
