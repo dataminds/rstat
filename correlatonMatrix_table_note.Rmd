@@ -5,9 +5,74 @@ output: html_notebook
 
 
 # 상관관계 표 만들기
-아래 방법이 더 간단 
+아래 두 방법이 결합하는게 더 간단 
 https://www.datadreaming.org/post/apa-tables-using-rmarkdown-part-3/
 https://stefaneng.github.io/apa_correlation_table/
+
+```
+apply_if <- function(mat, p, f) {
+  # Fill NA with FALSE
+  p[is.na(p)] <- FALSE
+  mat[p] <- f(mat[p])
+  mat
+}
+apaCorr <- function(mat, corrtype = "pearson") {
+  matCorr <- mat
+  if (class(matCorr) != "rcorr") {
+    matCorr <- rcorr(mat, type = corrtype)
+  }
+
+  # Add one star for each p < 0.05, 0.01, 0.001
+  stars <- apply_if(round(matCorr$r, 2), matCorr$P < 0.05, function(x) paste0(x, "*"))
+  stars <- apply_if(stars, matCorr$P < 0.01, function(x) paste0(x, "*"))
+  stars <- apply_if(stars, matCorr$P < 0.001, function(x) paste0(x, "*"))
+  # Put - on diagonal and blank on upper diagonal
+  stars[upper.tri(stars, diag = T)] <- "-"
+  stars[upper.tri(stars, diag = F)] <- ""
+  n <- length(stars[1,])
+  colnames(stars) <- 1:n
+  # Remove _ and convert to title case
+  row.names(stars) <- tools::toTitleCase(sapply(row.names(stars), gsub, pattern="_", replacement = " "))
+  # Add index number to row names
+  row.names(stars) <- paste(paste0(1:n,"."), row.names(stars))
+  stars
+}
+
+options(digits = 3)
+v5889_df %>% dplyr::select(대면빈도, 비대면빈도, 대면인원, 비대면인원, 우울불안, 삶만족) -> df
+
+df %>% map_dfc(mean) %>% fashion(decimals = 2) %>% as_tibble() %>% 
+  pivot_longer(everything(), names_to = "Mname", values_to = "M") -> mean_df
+df %>% map_dfc(sd) %>% fashion(decimals = 2) %>% as_tibble() %>% 
+  pivot_longer(everything(), names_to = "SDname", values_to = "SD") -> sd_df
+df %>% correlate() %>% shave(upper = T) %>% 
+  fashion(decimals = 2, na_print = "-") %>% as_tibble() -> cor_df
+df %>% as.matrix() %>% apaCorr(corrtype = "pearson") %>% 
+  as.data.frame() -> cor_df
+tibble(Variable = c(
+  "1. F2F Frequency ",
+  "2. CMC Frequency",
+  "3. F2F Network Size",
+  "4. CMC Network Size",
+  "5. Ill-being",
+  "6. Well-being"
+)) -> row_df
+
+bind_cols(row_df, mean_df[2], sd_df[2], cor_df) %>% 
+  gt() %>% gt_theme_538() %>% 
+  tab_header(md("**Table 1** Descriptive Statistics and Correlations for Study Variables")
+  ) %>% cols_label(
+    M = md("*M*"), SD = md("*SD*")
+  ) %>% cols_width(
+    Variable ~ px(180)
+  ) %>% tab_source_note(
+    source_note = md("_Note._ * _p_ < .05,  ** _p_ < .01,  *** _p_ < .001  
+                     F2F = Face-to-Face, CMC = Computer Mediated Communication")
+  )
+
+```
+
+이전 방식. 다소 복잡. 
 
 ### required packages
 
