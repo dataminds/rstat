@@ -5,7 +5,8 @@ output: html_notebook
 
 
 # 상관관계 표 만들기
-아래 방법이 
+아래 방법이 더 간단 
+https://www.datadreaming.org/post/apa-tables-using-rmarkdown-part-3/
 https://stefaneng.github.io/apa_correlation_table/
 
 ### required packages
