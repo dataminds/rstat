@@ -276,6 +276,8 @@ plotHistFunc(df) ## execute function
 ```
 ### ggplot2 in a map loop purrr
 https://aosmith.rbind.io/2018/08/20/automating-exploratory-plots/
+
+```
 library(ggplot2) # v. 3.3.3
 library(purrr) # v. 0.3.4
 
@@ -358,8 +360,6 @@ cowplot::plot_grid(plotlist = all_plots[[1]])
 
 response_plots = map(all_plots, ~cowplot::plot_grid(plotlist = .x))
 response_plots
-```
-
 
 ```
 
